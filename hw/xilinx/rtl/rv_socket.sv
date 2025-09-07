@@ -1,6 +1,7 @@
 // Author: Stefano Mercogliano <stefano.mercogliano@unina.it>
 // Author: Vincenzo Maisto <vincenzo.maisto2@unina.it>
 // Author: Cesare Pulcrano <ce.pulcrano@studenti.unina.it>
+// Author: Salvatore Santoro <sal.santoro@studenti.unina.it>
 // Description: Wrapper module for RISC-V CPUs and Debuggers
 
 // Import packages
@@ -84,8 +85,8 @@ module rv_socket # (
     ////////////////////////////
 
     // Check if the selected Core is compatible with the system XLEN
-    if ( LOCAL_DATA_WIDTH == 64 && CORE_SELECTOR inside {CORE_PICORV32,CORE_CV32E40P,CORE_IBEX,CORE_MICROBLAZEV_32} ||
-         LOCAL_DATA_WIDTH == 32 && CORE_SELECTOR inside {CORE_CV64A6, CORE_MICROBLAZEV_64} ) begin : xlen_core_error
+    if ( LOCAL_DATA_WIDTH == 64 && CORE_SELECTOR inside {CORE_PICORV32,CORE_CV32E40P,CORE_IBEX,CORE_MICROBLAZEV_RV32} ||
+         LOCAL_DATA_WIDTH == 32 && CORE_SELECTOR inside {CORE_CV64A6, CORE_MICROBLAZEV_RV64} ) begin : xlen_core_error
         $error($sformatf("[Socket] Illegal CORE (%s) for the selected XLEN (%0d)",
                         core_selector_to_string(CORE_SELECTOR), LOCAL_DATA_WIDTH));
     end : xlen_core_error
@@ -270,7 +271,7 @@ module rv_socket # (
 
             );
         end
-        else if (CORE_SELECTOR == CORE_MICROBLAZEV_32) begin : xlnx_microblazev_32
+        else if (CORE_SELECTOR == CORE_MICROBLAZEV_RV32) begin : xlnx_microblazev_rv32
 
             // Tie-off unused signals
             assign core_instr_mem_wdata = '0;
@@ -302,7 +303,7 @@ module rv_socket # (
             `DECLARE_AXI_BUS(converter_instr, LOCAL_DATA_WIDTH, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
 
             // Microblaze V 32 instance
-            xlnx_microblazev_32 microblazev_u (
+            xlnx_microblazev_rv32 microblazev_u (
                 // Clock and reset
                 .Clk                ( clk_i       ), // input wire Clk
                 .Reset              ( dbg_sys_rst ), // input wire Reset
@@ -486,7 +487,7 @@ module rv_socket # (
 
         // TODO: Debug the configuration of SoC with MicroblazeV 64 bit
         // currently the only example working is "blinky"
-        else if (CORE_SELECTOR == CORE_MICROBLAZEV_64) begin : xlnx_microblazev_64
+        else if (CORE_SELECTOR == CORE_MICROBLAZEV_RV64) begin : xlnx_microblazev_rv64
 
             // Tie-off unused signals
             assign core_instr_mem_wdata = '0;
@@ -521,7 +522,7 @@ module rv_socket # (
 
 
             // Microblaze V 64 instance
-            xlnx_microblazev_64 microblazev_u (
+            xlnx_microblazev_rv64 microblazev_u (
                 // Clock and reset
                 .Clk                ( clk_i       ), // input wire Clk
                 .Reset              ( dbg_sys_rst ), // input wire Reset
@@ -953,7 +954,7 @@ module rv_socket # (
     // - Microblaze V has its own interfaces and debug module
     // - CVA6 Already has an AXI interface
     // - TODO: Rocket
-    if ( !( CORE_SELECTOR inside {CORE_MICROBLAZEV_32, CORE_MICROBLAZEV_64, CORE_CV64A6} ) ) begin : mem_convert
+    if ( !( CORE_SELECTOR inside {CORE_MICROBLAZEV_RV32, CORE_MICROBLAZEV_RV64, CORE_CV64A6} ) ) begin : mem_convert
 
         // Connect memory interfaces to socket output memory ports
         `ASSIGN_AXI_BUS( rv_socket_instr, core_instr_to_socket_instr );
