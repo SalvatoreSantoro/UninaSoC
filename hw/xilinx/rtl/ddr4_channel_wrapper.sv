@@ -318,7 +318,7 @@ module ddr4_channel_wrapper # (
         .M0_AXI_AWQOS       (cache_to_ddr4_axi_awqos),              // output wire [3 : 0] M0_AXI_AWQOS
         .M0_AXI_AWVALID     (cache_to_ddr4_axi_awvalid),          // output wire M0_AXI_AWVALID
         .M0_AXI_AWREADY     (cache_to_ddr4_axi_awready),          // input wire M0_AXI_AWREADY
-        .M0_AXI_WDATA       (cache_to_ddr4_axi_wdata),              // output wire [31 : 0] M0_AXI_WDATA
+        .M0_AXI_WDATA       (cache_to_ddr4_axi_wdata),              // output wire [511 : 0] M0_AXI_WDATA
         .M0_AXI_WSTRB       (cache_to_ddr4_axi_wstrb),              // output wire [3 : 0] M0_AXI_WSTRB
         .M0_AXI_WLAST       (cache_to_ddr4_axi_wlast),              // output wire M0_AXI_WLAST
         .M0_AXI_WVALID      (cache_to_ddr4_axi_wvalid),            // output wire M0_AXI_WVALID
@@ -339,7 +339,7 @@ module ddr4_channel_wrapper # (
         .M0_AXI_ARVALID     (cache_to_ddr4_axi_arvalid),          // output wire M0_AXI_ARVALID
         .M0_AXI_ARREADY     (cache_to_ddr4_axi_arready),          // input wire M0_AXI_ARREADY
         .M0_AXI_RID         (cache_to_ddr4_axi_rid),                  // input wire [0 : 0] M0_AXI_RID
-        .M0_AXI_RDATA       (cache_to_ddr4_axi_rdata),              // input wire [31 : 0] M0_AXI_RDATA
+        .M0_AXI_RDATA       (cache_to_ddr4_axi_rdata),              // input wire [511 : 0] M0_AXI_RDATA
         .M0_AXI_RRESP       (cache_to_ddr4_axi_rresp),              // input wire [1 : 0] M0_AXI_RRESP
         .M0_AXI_RLAST       (cache_to_ddr4_axi_rlast),              // input wire M0_AXI_RLAST
         .M0_AXI_RVALID      (cache_to_ddr4_axi_rvalid),            // input wire M0_AXI_RVALID
