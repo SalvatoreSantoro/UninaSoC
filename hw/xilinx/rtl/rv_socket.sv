@@ -405,14 +405,10 @@ module rv_socket # (
             // ID's are set to zero since they are not present in microblaze, while the crossbar have ID's of size 2.
             // Instruction
             assign converter_instr_axi_awid = '0;
-            //assign converter_instr_axi_bid  = '0;
             assign converter_instr_axi_arid = '0;
-            //assign converter_instr_axi_rid  = '0;
             // Data
             assign microblaze_data_axi_awid = '0;
-            //assign microblaze_data_axi_bid  = '0;
             assign microblaze_data_axi_arid = '0;
-            //assign microblaze_data_axi_rid  = '0;
 
             // Regions are not present in microblaze data implementation so they are set to 0.
             assign microblaze_data_axi_awregion ='0;
@@ -493,7 +489,7 @@ module rv_socket # (
             assign core_instr_mem_wdata = '0;
             assign core_instr_mem_we    = '0;
             assign core_instr_mem_be    = '0;
-            
+
             //////////////////////////
             //     MICROBLAZE 64    //
             //////////////////////////
@@ -731,7 +727,7 @@ module rv_socket # (
                 .s_axi_arregion ( adapter_from_32_instr_axi_arregion   ),
 
                 // Master
-     
+
                 .m_axi_awaddr   ( adapter_to_64_instr_axi_awaddr  ),
                 .m_axi_awlen    ( adapter_to_64_instr_axi_awlen   ),
                 .m_axi_awsize   ( adapter_to_64_instr_axi_awsize  ),
