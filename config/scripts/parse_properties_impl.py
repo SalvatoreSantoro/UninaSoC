@@ -145,7 +145,7 @@ def parse_XLEN (
 		# SoC config
 		case "SYS":
 			# Set XLEN in order to check CORE data width correctness
-			config.XLEN = int(property_value) 
+			config.XLEN = int(property_value)
 			logging.info("Skipping DATA_WIDTH set for SYS")
 		case _:
 			logging.error("Can't read valid config.CONFIG_NAME " + config.CONFIG_NAME)
