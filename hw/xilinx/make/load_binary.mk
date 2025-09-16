@@ -48,7 +48,10 @@ ELF_PATH ?= ${SW_ROOT}/SoC/examples/blinky/bin/blinky.elf
 
 # Use XSDB as a backend
 XSDB ?= xsdb
-# 32-bit RISC-V port exposed by Vivado HW Server is 3004, while it is 3005 for 64_bit
+# For MicroblazeV, Vivado HW Server exposes ports:
+# - 3004 for 32-bit,
+# - 3005 for 64-bit
+# Althoug if one of the port has already been used, hw_server will not switch and use the active one for either 32 or 64 bits.
 # If using OpenOCD, we always connect to port 3004
 DEBUG_PORT ?= 3004
 
