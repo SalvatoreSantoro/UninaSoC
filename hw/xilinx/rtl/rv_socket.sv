@@ -476,10 +476,8 @@ module rv_socket # (
                 .m_axi_rvalid   ( converter_instr_axi_rvalid        ), // input wire m_axi_rvalid
                 .m_axi_rready   ( converter_instr_axi_rready        )  // output wire m_axi_rready
             );
+        end : xlnx_microblazev_rv32
 
-        end
-
-        // 64-bits cores
         else if (CORE_SELECTOR == CORE_MICROBLAZEV_RV64) begin : xlnx_microblazev_rv64
 
             // Tie-off unused signals
@@ -850,7 +848,7 @@ module rv_socket # (
             // Data
             assign adapter_to_64_data_axi_awid = '0;
             assign adapter_to_64_data_axi_arid = '0;
-        end
+        end : xlnx_microblazev_rv64
 
         else if (CORE_SELECTOR == CORE_CV64A6) begin: core_cv64a6
 
