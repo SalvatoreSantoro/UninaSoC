@@ -507,9 +507,9 @@ module rv_socket # (
             `DECLARE_AXILITE_BUS(microblaze_instr, 32, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
 
             // Declare AXI dwith 32-64 adapters
-            `DECLARE_AXI_BUS(adapter_to_64_data, 64, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
-            `DECLARE_AXI_BUS(adapter_from_32_instr, 32, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
-            `DECLARE_AXI_BUS(adapter_to_64_instr, 64, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
+            `DECLARE_AXI_BUS(dwidth_conv_to_d64_data, 64, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
+            `DECLARE_AXI_BUS(dwidth_conv_from_d32_instr, 32, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
+            `DECLARE_AXI_BUS(dwidth_conv_to_d64_instr, 64, LOCAL_ADDR_WIDTH, LOCAL_ID_WIDTH);
 
             // Microblaze-V 64 instance
             xlnx_microblazev_rv64 microblazev_u (
@@ -591,7 +591,7 @@ module rv_socket # (
                 .M_AXI_IP_RREADY    ( microblaze_instr_axilite_rready   )  // output wire M_AXI_IP_RREADY
             );
 
-            xlnx_axi_dwidth_32_to_64_converter data_adapter_u (
+            xlnx_axi_dwidth_32_to_64_converter data_dwidth_conv_u (
                 .s_axi_aclk     ( clk_i  ),
                 .s_axi_aresetn  ( rst_ni ),
 
@@ -637,124 +637,124 @@ module rv_socket # (
                 .s_axi_arregion ( microblaze_data_axi_arregion ),
 
                 // Master
-                .m_axi_awaddr   ( adapter_to_64_data_axi_awaddr   ),
-                .m_axi_awlen    ( adapter_to_64_data_axi_awlen    ),
-                .m_axi_awsize   ( adapter_to_64_data_axi_awsize   ),
-                .m_axi_awburst  ( adapter_to_64_data_axi_awburst  ),
-                .m_axi_awlock   ( adapter_to_64_data_axi_awlock   ),
-                .m_axi_awcache  ( adapter_to_64_data_axi_awcache  ),
-                .m_axi_awprot   ( adapter_to_64_data_axi_awprot   ),
-                .m_axi_awqos    ( adapter_to_64_data_axi_awqos    ),
-                .m_axi_awvalid  ( adapter_to_64_data_axi_awvalid  ),
-                .m_axi_awready  ( adapter_to_64_data_axi_awready  ),
-                .m_axi_awregion ( adapter_to_64_data_axi_awregion ),
-                .m_axi_wdata    ( adapter_to_64_data_axi_wdata    ),
-                .m_axi_wstrb    ( adapter_to_64_data_axi_wstrb    ),
-                .m_axi_wlast    ( adapter_to_64_data_axi_wlast    ),
-                .m_axi_wvalid   ( adapter_to_64_data_axi_wvalid   ),
-                .m_axi_wready   ( adapter_to_64_data_axi_wready   ),
-                .m_axi_bresp    ( adapter_to_64_data_axi_bresp    ),
-                .m_axi_bvalid   ( adapter_to_64_data_axi_bvalid   ),
-                .m_axi_bready   ( adapter_to_64_data_axi_bready   ),
-                .m_axi_arregion ( adapter_to_64_data_axi_arregion ),
-                .m_axi_araddr   ( adapter_to_64_data_axi_araddr   ),
-                .m_axi_arlen    ( adapter_to_64_data_axi_arlen    ),
-                .m_axi_arsize   ( adapter_to_64_data_axi_arsize   ),
-                .m_axi_arburst  ( adapter_to_64_data_axi_arburst  ),
-                .m_axi_arlock   ( adapter_to_64_data_axi_arlock   ),
-                .m_axi_arcache  ( adapter_to_64_data_axi_arcache  ),
-                .m_axi_arprot   ( adapter_to_64_data_axi_arprot   ),
-                .m_axi_arqos    ( adapter_to_64_data_axi_arqos    ),
-                .m_axi_arvalid  ( adapter_to_64_data_axi_arvalid  ),
-                .m_axi_arready  ( adapter_to_64_data_axi_arready  ),
-                .m_axi_rdata    ( adapter_to_64_data_axi_rdata    ),
-                .m_axi_rresp    ( adapter_to_64_data_axi_rresp    ),
-                .m_axi_rlast    ( adapter_to_64_data_axi_rlast    ),
-                .m_axi_rvalid   ( adapter_to_64_data_axi_rvalid   ),
-                .m_axi_rready   ( adapter_to_64_data_axi_rready   )
+                .m_axi_awaddr   ( dwidth_conv_to_d64_data_axi_awaddr   ),
+                .m_axi_awlen    ( dwidth_conv_to_d64_data_axi_awlen    ),
+                .m_axi_awsize   ( dwidth_conv_to_d64_data_axi_awsize   ),
+                .m_axi_awburst  ( dwidth_conv_to_d64_data_axi_awburst  ),
+                .m_axi_awlock   ( dwidth_conv_to_d64_data_axi_awlock   ),
+                .m_axi_awcache  ( dwidth_conv_to_d64_data_axi_awcache  ),
+                .m_axi_awprot   ( dwidth_conv_to_d64_data_axi_awprot   ),
+                .m_axi_awqos    ( dwidth_conv_to_d64_data_axi_awqos    ),
+                .m_axi_awvalid  ( dwidth_conv_to_d64_data_axi_awvalid  ),
+                .m_axi_awready  ( dwidth_conv_to_d64_data_axi_awready  ),
+                .m_axi_awregion ( dwidth_conv_to_d64_data_axi_awregion ),
+                .m_axi_wdata    ( dwidth_conv_to_d64_data_axi_wdata    ),
+                .m_axi_wstrb    ( dwidth_conv_to_d64_data_axi_wstrb    ),
+                .m_axi_wlast    ( dwidth_conv_to_d64_data_axi_wlast    ),
+                .m_axi_wvalid   ( dwidth_conv_to_d64_data_axi_wvalid   ),
+                .m_axi_wready   ( dwidth_conv_to_d64_data_axi_wready   ),
+                .m_axi_bresp    ( dwidth_conv_to_d64_data_axi_bresp    ),
+                .m_axi_bvalid   ( dwidth_conv_to_d64_data_axi_bvalid   ),
+                .m_axi_bready   ( dwidth_conv_to_d64_data_axi_bready   ),
+                .m_axi_arregion ( dwidth_conv_to_d64_data_axi_arregion ),
+                .m_axi_araddr   ( dwidth_conv_to_d64_data_axi_araddr   ),
+                .m_axi_arlen    ( dwidth_conv_to_d64_data_axi_arlen    ),
+                .m_axi_arsize   ( dwidth_conv_to_d64_data_axi_arsize   ),
+                .m_axi_arburst  ( dwidth_conv_to_d64_data_axi_arburst  ),
+                .m_axi_arlock   ( dwidth_conv_to_d64_data_axi_arlock   ),
+                .m_axi_arcache  ( dwidth_conv_to_d64_data_axi_arcache  ),
+                .m_axi_arprot   ( dwidth_conv_to_d64_data_axi_arprot   ),
+                .m_axi_arqos    ( dwidth_conv_to_d64_data_axi_arqos    ),
+                .m_axi_arvalid  ( dwidth_conv_to_d64_data_axi_arvalid  ),
+                .m_axi_arready  ( dwidth_conv_to_d64_data_axi_arready  ),
+                .m_axi_rdata    ( dwidth_conv_to_d64_data_axi_rdata    ),
+                .m_axi_rresp    ( dwidth_conv_to_d64_data_axi_rresp    ),
+                .m_axi_rlast    ( dwidth_conv_to_d64_data_axi_rlast    ),
+                .m_axi_rvalid   ( dwidth_conv_to_d64_data_axi_rvalid   ),
+                .m_axi_rready   ( dwidth_conv_to_d64_data_axi_rready   )
             );
 
-            xlnx_axi_dwidth_32_to_64_converter instr_adapter_u (
+            xlnx_axi_dwidth_32_to_64_converter instr_dwidth_conv_u (
                 .s_axi_aclk     ( clk_i  ),
                 .s_axi_aresetn  ( rst_ni ),
 
                 // Slave
-                .s_axi_awid     ( adapter_from_32_instr_axi_awid     ),
-                .s_axi_awaddr   ( adapter_from_32_instr_axi_awaddr   ),
-                .s_axi_awlen    ( adapter_from_32_instr_axi_awlen    ),
-                .s_axi_awsize   ( adapter_from_32_instr_axi_awsize   ),
-                .s_axi_awburst  ( adapter_from_32_instr_axi_awburst  ),
-                .s_axi_awvalid  ( adapter_from_32_instr_axi_awvalid  ),
-                .s_axi_awready  ( adapter_from_32_instr_axi_awready  ),
-                .s_axi_wdata    ( adapter_from_32_instr_axi_wdata    ),
-                .s_axi_wstrb    ( adapter_from_32_instr_axi_wstrb    ),
-                .s_axi_wlast    ( adapter_from_32_instr_axi_wlast    ),
-                .s_axi_wvalid   ( adapter_from_32_instr_axi_wvalid   ),
-                .s_axi_wready   ( adapter_from_32_instr_axi_wready   ),
-                .s_axi_bid      ( adapter_from_32_instr_axi_bid      ),
-                .s_axi_bresp    ( adapter_from_32_instr_axi_bresp    ),
-                .s_axi_bvalid   ( adapter_from_32_instr_axi_bvalid   ),
-                .s_axi_bready   ( adapter_from_32_instr_axi_bready   ),
-                .s_axi_arid     ( adapter_from_32_instr_axi_arid     ),
-                .s_axi_araddr   ( adapter_from_32_instr_axi_araddr   ),
-                .s_axi_arlen    ( adapter_from_32_instr_axi_arlen    ),
-                .s_axi_arsize   ( adapter_from_32_instr_axi_arsize   ),
-                .s_axi_arburst  ( adapter_from_32_instr_axi_arburst  ),
-                .s_axi_arvalid  ( adapter_from_32_instr_axi_arvalid  ),
-                .s_axi_arready  ( adapter_from_32_instr_axi_arready  ),
-                .s_axi_rid      ( adapter_from_32_instr_axi_rid      ),
-                .s_axi_rdata    ( adapter_from_32_instr_axi_rdata    ),
-                .s_axi_rresp    ( adapter_from_32_instr_axi_rresp    ),
-                .s_axi_rlast    ( adapter_from_32_instr_axi_rlast    ),
-                .s_axi_rvalid   ( adapter_from_32_instr_axi_rvalid   ),
-                .s_axi_rready   ( adapter_from_32_instr_axi_rready   ),
-                .s_axi_awlock   ( adapter_from_32_instr_axi_awlock   ),
-                .s_axi_awcache  ( adapter_from_32_instr_axi_awcache  ),
-                .s_axi_awprot   ( adapter_from_32_instr_axi_awprot   ),
-                .s_axi_awqos    ( adapter_from_32_instr_axi_awqos    ),
-                .s_axi_awregion ( adapter_from_32_instr_axi_awregion ),
-                .s_axi_arlock   ( adapter_from_32_instr_axi_arlock   ),
-                .s_axi_arcache  ( adapter_from_32_instr_axi_arcache  ),
-                .s_axi_arprot   ( adapter_from_32_instr_axi_arprot   ),
-                .s_axi_arqos    ( adapter_from_32_instr_axi_arqos    ),
-                .s_axi_arregion ( adapter_from_32_instr_axi_arregion ),
+                .s_axi_awid     ( dwidth_conv_from_d32_instr_axi_awid     ),
+                .s_axi_awaddr   ( dwidth_conv_from_d32_instr_axi_awaddr   ),
+                .s_axi_awlen    ( dwidth_conv_from_d32_instr_axi_awlen    ),
+                .s_axi_awsize   ( dwidth_conv_from_d32_instr_axi_awsize   ),
+                .s_axi_awburst  ( dwidth_conv_from_d32_instr_axi_awburst  ),
+                .s_axi_awvalid  ( dwidth_conv_from_d32_instr_axi_awvalid  ),
+                .s_axi_awready  ( dwidth_conv_from_d32_instr_axi_awready  ),
+                .s_axi_wdata    ( dwidth_conv_from_d32_instr_axi_wdata    ),
+                .s_axi_wstrb    ( dwidth_conv_from_d32_instr_axi_wstrb    ),
+                .s_axi_wlast    ( dwidth_conv_from_d32_instr_axi_wlast    ),
+                .s_axi_wvalid   ( dwidth_conv_from_d32_instr_axi_wvalid   ),
+                .s_axi_wready   ( dwidth_conv_from_d32_instr_axi_wready   ),
+                .s_axi_bid      ( dwidth_conv_from_d32_instr_axi_bid      ),
+                .s_axi_bresp    ( dwidth_conv_from_d32_instr_axi_bresp    ),
+                .s_axi_bvalid   ( dwidth_conv_from_d32_instr_axi_bvalid   ),
+                .s_axi_bready   ( dwidth_conv_from_d32_instr_axi_bready   ),
+                .s_axi_arid     ( dwidth_conv_from_d32_instr_axi_arid     ),
+                .s_axi_araddr   ( dwidth_conv_from_d32_instr_axi_araddr   ),
+                .s_axi_arlen    ( dwidth_conv_from_d32_instr_axi_arlen    ),
+                .s_axi_arsize   ( dwidth_conv_from_d32_instr_axi_arsize   ),
+                .s_axi_arburst  ( dwidth_conv_from_d32_instr_axi_arburst  ),
+                .s_axi_arvalid  ( dwidth_conv_from_d32_instr_axi_arvalid  ),
+                .s_axi_arready  ( dwidth_conv_from_d32_instr_axi_arready  ),
+                .s_axi_rid      ( dwidth_conv_from_d32_instr_axi_rid      ),
+                .s_axi_rdata    ( dwidth_conv_from_d32_instr_axi_rdata    ),
+                .s_axi_rresp    ( dwidth_conv_from_d32_instr_axi_rresp    ),
+                .s_axi_rlast    ( dwidth_conv_from_d32_instr_axi_rlast    ),
+                .s_axi_rvalid   ( dwidth_conv_from_d32_instr_axi_rvalid   ),
+                .s_axi_rready   ( dwidth_conv_from_d32_instr_axi_rready   ),
+                .s_axi_awlock   ( dwidth_conv_from_d32_instr_axi_awlock   ),
+                .s_axi_awcache  ( dwidth_conv_from_d32_instr_axi_awcache  ),
+                .s_axi_awprot   ( dwidth_conv_from_d32_instr_axi_awprot   ),
+                .s_axi_awqos    ( dwidth_conv_from_d32_instr_axi_awqos    ),
+                .s_axi_awregion ( dwidth_conv_from_d32_instr_axi_awregion ),
+                .s_axi_arlock   ( dwidth_conv_from_d32_instr_axi_arlock   ),
+                .s_axi_arcache  ( dwidth_conv_from_d32_instr_axi_arcache  ),
+                .s_axi_arprot   ( dwidth_conv_from_d32_instr_axi_arprot   ),
+                .s_axi_arqos    ( dwidth_conv_from_d32_instr_axi_arqos    ),
+                .s_axi_arregion ( dwidth_conv_from_d32_instr_axi_arregion ),
 
                 // Master
-                .m_axi_awaddr   ( adapter_to_64_instr_axi_awaddr   ),
-                .m_axi_awlen    ( adapter_to_64_instr_axi_awlen    ),
-                .m_axi_awsize   ( adapter_to_64_instr_axi_awsize   ),
-                .m_axi_awburst  ( adapter_to_64_instr_axi_awburst  ),
-                .m_axi_awlock   ( adapter_to_64_instr_axi_awlock   ),
-                .m_axi_awcache  ( adapter_to_64_instr_axi_awcache  ),
-                .m_axi_awprot   ( adapter_to_64_instr_axi_awprot   ),
-                .m_axi_awqos    ( adapter_to_64_instr_axi_awqos    ),
-                .m_axi_awvalid  ( adapter_to_64_instr_axi_awvalid  ),
-                .m_axi_awready  ( adapter_to_64_instr_axi_awready  ),
-                .m_axi_awregion ( adapter_to_64_instr_axi_awregion ),
-                .m_axi_wdata    ( adapter_to_64_instr_axi_wdata    ),
-                .m_axi_wstrb    ( adapter_to_64_instr_axi_wstrb    ),
-                .m_axi_wlast    ( adapter_to_64_instr_axi_wlast    ),
-                .m_axi_wvalid   ( adapter_to_64_instr_axi_wvalid   ),
-                .m_axi_wready   ( adapter_to_64_instr_axi_wready   ),
-                .m_axi_bresp    ( adapter_to_64_instr_axi_bresp    ),
-                .m_axi_bvalid   ( adapter_to_64_instr_axi_bvalid   ),
-                .m_axi_bready   ( adapter_to_64_instr_axi_bready   ),
-                .m_axi_araddr   ( adapter_to_64_instr_axi_araddr   ),
-                .m_axi_arlen    ( adapter_to_64_instr_axi_arlen    ),
-                .m_axi_arsize   ( adapter_to_64_instr_axi_arsize   ),
-                .m_axi_arburst  ( adapter_to_64_instr_axi_arburst  ),
-                .m_axi_arlock   ( adapter_to_64_instr_axi_arlock   ),
-                .m_axi_arcache  ( adapter_to_64_instr_axi_arcache  ),
-                .m_axi_arprot   ( adapter_to_64_instr_axi_arprot   ),
-                .m_axi_arqos    ( adapter_to_64_instr_axi_arqos    ),
-                .m_axi_arvalid  ( adapter_to_64_instr_axi_arvalid  ),
-                .m_axi_arready  ( adapter_to_64_instr_axi_arready  ),
-                .m_axi_arregion ( adapter_to_64_instr_axi_arregion ),
-                .m_axi_rdata    ( adapter_to_64_instr_axi_rdata    ),
-                .m_axi_rresp    ( adapter_to_64_instr_axi_rresp    ),
-                .m_axi_rlast    ( adapter_to_64_instr_axi_rlast    ),
-                .m_axi_rvalid   ( adapter_to_64_instr_axi_rvalid   ),
-                .m_axi_rready   ( adapter_to_64_instr_axi_rready   )
+                .m_axi_awaddr   ( dwidth_conv_to_d64_instr_axi_awaddr   ),
+                .m_axi_awlen    ( dwidth_conv_to_d64_instr_axi_awlen    ),
+                .m_axi_awsize   ( dwidth_conv_to_d64_instr_axi_awsize   ),
+                .m_axi_awburst  ( dwidth_conv_to_d64_instr_axi_awburst  ),
+                .m_axi_awlock   ( dwidth_conv_to_d64_instr_axi_awlock   ),
+                .m_axi_awcache  ( dwidth_conv_to_d64_instr_axi_awcache  ),
+                .m_axi_awprot   ( dwidth_conv_to_d64_instr_axi_awprot   ),
+                .m_axi_awqos    ( dwidth_conv_to_d64_instr_axi_awqos    ),
+                .m_axi_awvalid  ( dwidth_conv_to_d64_instr_axi_awvalid  ),
+                .m_axi_awready  ( dwidth_conv_to_d64_instr_axi_awready  ),
+                .m_axi_awregion ( dwidth_conv_to_d64_instr_axi_awregion ),
+                .m_axi_wdata    ( dwidth_conv_to_d64_instr_axi_wdata    ),
+                .m_axi_wstrb    ( dwidth_conv_to_d64_instr_axi_wstrb    ),
+                .m_axi_wlast    ( dwidth_conv_to_d64_instr_axi_wlast    ),
+                .m_axi_wvalid   ( dwidth_conv_to_d64_instr_axi_wvalid   ),
+                .m_axi_wready   ( dwidth_conv_to_d64_instr_axi_wready   ),
+                .m_axi_bresp    ( dwidth_conv_to_d64_instr_axi_bresp    ),
+                .m_axi_bvalid   ( dwidth_conv_to_d64_instr_axi_bvalid   ),
+                .m_axi_bready   ( dwidth_conv_to_d64_instr_axi_bready   ),
+                .m_axi_araddr   ( dwidth_conv_to_d64_instr_axi_araddr   ),
+                .m_axi_arlen    ( dwidth_conv_to_d64_instr_axi_arlen    ),
+                .m_axi_arsize   ( dwidth_conv_to_d64_instr_axi_arsize   ),
+                .m_axi_arburst  ( dwidth_conv_to_d64_instr_axi_arburst  ),
+                .m_axi_arlock   ( dwidth_conv_to_d64_instr_axi_arlock   ),
+                .m_axi_arcache  ( dwidth_conv_to_d64_instr_axi_arcache  ),
+                .m_axi_arprot   ( dwidth_conv_to_d64_instr_axi_arprot   ),
+                .m_axi_arqos    ( dwidth_conv_to_d64_instr_axi_arqos    ),
+                .m_axi_arvalid  ( dwidth_conv_to_d64_instr_axi_arvalid  ),
+                .m_axi_arready  ( dwidth_conv_to_d64_instr_axi_arready  ),
+                .m_axi_arregion ( dwidth_conv_to_d64_instr_axi_arregion ),
+                .m_axi_rdata    ( dwidth_conv_to_d64_instr_axi_rdata    ),
+                .m_axi_rresp    ( dwidth_conv_to_d64_instr_axi_rresp    ),
+                .m_axi_rlast    ( dwidth_conv_to_d64_instr_axi_rlast    ),
+                .m_axi_rvalid   ( dwidth_conv_to_d64_instr_axi_rvalid   ),
+                .m_axi_rready   ( dwidth_conv_to_d64_instr_axi_rready   )
             );
 
             // Convert from MICROBLAZE-V (AXI-lite) to socket (AXI)
@@ -783,41 +783,41 @@ module rv_socket # (
                 .s_axi_rvalid   ( microblaze_instr_axilite_rvalid   ), // output wire s_axi_rvalid
                 .s_axi_rready   ( microblaze_instr_axilite_rready   ), // input wire s_axi_rready
                 // To socket (AXI)
-                .m_axi_awaddr   ( adapter_from_32_instr_axi_awaddr   ), // output wire [31 : 0] m_axi_awaddr
-                .m_axi_awlen    ( adapter_from_32_instr_axi_awlen    ), // output wire [7 : 0] m_axi_awlen
-                .m_axi_awsize   ( adapter_from_32_instr_axi_awsize   ), // output wire [2 : 0] m_axi_awsize
-                .m_axi_awburst  ( adapter_from_32_instr_axi_awburst  ), // output wire [1 : 0] m_axi_awburst
-                .m_axi_awlock   ( adapter_from_32_instr_axi_awlock   ), // output wire [0 : 0] m_axi_awlock
-                .m_axi_awcache  ( adapter_from_32_instr_axi_awcache  ), // output wire [3 : 0] m_axi_awcache
-                .m_axi_awprot   ( adapter_from_32_instr_axi_awprot   ), // output wire [2 : 0] m_axi_awprot
-                .m_axi_awregion ( adapter_from_32_instr_axi_awregion ), // output wire [3 : 0] m_axi_awregion
-                .m_axi_awqos    ( adapter_from_32_instr_axi_awqos    ), // output wire [3 : 0] m_axi_awqos
-                .m_axi_awvalid  ( adapter_from_32_instr_axi_awvalid  ), // output wire m_axi_awvalid
-                .m_axi_awready  ( adapter_from_32_instr_axi_awready  ), // input wire m_axi_awready
-                .m_axi_wdata    ( adapter_from_32_instr_axi_wdata    ), // output wire [31 : 0] m_axi_wdata
-                .m_axi_wstrb    ( adapter_from_32_instr_axi_wstrb    ), // output wire [3 : 0] m_axi_wstrb
-                .m_axi_wlast    ( adapter_from_32_instr_axi_wlast    ), // output wire m_axi_wlast
-                .m_axi_wvalid   ( adapter_from_32_instr_axi_wvalid   ), // output wire m_axi_wvalid
-                .m_axi_wready   ( adapter_from_32_instr_axi_wready   ), // input wire m_axi_wready
-                .m_axi_bresp    ( adapter_from_32_instr_axi_bresp    ), // input wire [1 : 0] m_axi_bresp
-                .m_axi_bvalid   ( adapter_from_32_instr_axi_bvalid   ), // input wire m_axi_bvalid
-                .m_axi_bready   ( adapter_from_32_instr_axi_bready   ), // output wire m_axi_bready
-                .m_axi_araddr   ( adapter_from_32_instr_axi_araddr   ), // output wire [31 : 0] m_axi_araddr
-                .m_axi_arlen    ( adapter_from_32_instr_axi_arlen    ), // output wire [7 : 0] m_axi_arlen
-                .m_axi_arsize   ( adapter_from_32_instr_axi_arsize   ), // output wire [2 : 0] m_axi_arsize
-                .m_axi_arburst  ( adapter_from_32_instr_axi_arburst  ), // output wire [1 : 0] m_axi_arburst
-                .m_axi_arlock   ( adapter_from_32_instr_axi_arlock   ), // output wire [0 : 0] m_axi_arlock
-                .m_axi_arcache  ( adapter_from_32_instr_axi_arcache  ), // output wire [3 : 0] m_axi_arcache
-                .m_axi_arprot   ( adapter_from_32_instr_axi_arprot   ), // output wire [2 : 0] m_axi_arprot
-                .m_axi_arregion ( adapter_from_32_instr_axi_arregion ), // output wire [3 : 0] m_axi_arregion
-                .m_axi_arqos    ( adapter_from_32_instr_axi_arqos    ), // output wire [3 : 0] m_axi_arqos
-                .m_axi_arvalid  ( adapter_from_32_instr_axi_arvalid  ), // output wire m_axi_arvalid
-                .m_axi_arready  ( adapter_from_32_instr_axi_arready  ), // input wire m_axi_arready
-                .m_axi_rdata    ( adapter_from_32_instr_axi_rdata    ), // input wire [31 : 0] m_axi_rdata
-                .m_axi_rresp    ( adapter_from_32_instr_axi_rresp    ), // input wire [1 : 0] m_axi_rresp
-                .m_axi_rlast    ( adapter_from_32_instr_axi_rlast    ), // input wire m_axi_rlast
-                .m_axi_rvalid   ( adapter_from_32_instr_axi_rvalid   ), // input wire m_axi_rvalid
-                .m_axi_rready   ( adapter_from_32_instr_axi_rready   )  // output wire m_axi_rready
+                .m_axi_awaddr   ( dwidth_conv_from_d32_instr_axi_awaddr   ), // output wire [31 : 0] m_axi_awaddr
+                .m_axi_awlen    ( dwidth_conv_from_d32_instr_axi_awlen    ), // output wire [7 : 0] m_axi_awlen
+                .m_axi_awsize   ( dwidth_conv_from_d32_instr_axi_awsize   ), // output wire [2 : 0] m_axi_awsize
+                .m_axi_awburst  ( dwidth_conv_from_d32_instr_axi_awburst  ), // output wire [1 : 0] m_axi_awburst
+                .m_axi_awlock   ( dwidth_conv_from_d32_instr_axi_awlock   ), // output wire [0 : 0] m_axi_awlock
+                .m_axi_awcache  ( dwidth_conv_from_d32_instr_axi_awcache  ), // output wire [3 : 0] m_axi_awcache
+                .m_axi_awprot   ( dwidth_conv_from_d32_instr_axi_awprot   ), // output wire [2 : 0] m_axi_awprot
+                .m_axi_awregion ( dwidth_conv_from_d32_instr_axi_awregion ), // output wire [3 : 0] m_axi_awregion
+                .m_axi_awqos    ( dwidth_conv_from_d32_instr_axi_awqos    ), // output wire [3 : 0] m_axi_awqos
+                .m_axi_awvalid  ( dwidth_conv_from_d32_instr_axi_awvalid  ), // output wire m_axi_awvalid
+                .m_axi_awready  ( dwidth_conv_from_d32_instr_axi_awready  ), // input wire m_axi_awready
+                .m_axi_wdata    ( dwidth_conv_from_d32_instr_axi_wdata    ), // output wire [31 : 0] m_axi_wdata
+                .m_axi_wstrb    ( dwidth_conv_from_d32_instr_axi_wstrb    ), // output wire [3 : 0] m_axi_wstrb
+                .m_axi_wlast    ( dwidth_conv_from_d32_instr_axi_wlast    ), // output wire m_axi_wlast
+                .m_axi_wvalid   ( dwidth_conv_from_d32_instr_axi_wvalid   ), // output wire m_axi_wvalid
+                .m_axi_wready   ( dwidth_conv_from_d32_instr_axi_wready   ), // input wire m_axi_wready
+                .m_axi_bresp    ( dwidth_conv_from_d32_instr_axi_bresp    ), // input wire [1 : 0] m_axi_bresp
+                .m_axi_bvalid   ( dwidth_conv_from_d32_instr_axi_bvalid   ), // input wire m_axi_bvalid
+                .m_axi_bready   ( dwidth_conv_from_d32_instr_axi_bready   ), // output wire m_axi_bready
+                .m_axi_araddr   ( dwidth_conv_from_d32_instr_axi_araddr   ), // output wire [31 : 0] m_axi_araddr
+                .m_axi_arlen    ( dwidth_conv_from_d32_instr_axi_arlen    ), // output wire [7 : 0] m_axi_arlen
+                .m_axi_arsize   ( dwidth_conv_from_d32_instr_axi_arsize   ), // output wire [2 : 0] m_axi_arsize
+                .m_axi_arburst  ( dwidth_conv_from_d32_instr_axi_arburst  ), // output wire [1 : 0] m_axi_arburst
+                .m_axi_arlock   ( dwidth_conv_from_d32_instr_axi_arlock   ), // output wire [0 : 0] m_axi_arlock
+                .m_axi_arcache  ( dwidth_conv_from_d32_instr_axi_arcache  ), // output wire [3 : 0] m_axi_arcache
+                .m_axi_arprot   ( dwidth_conv_from_d32_instr_axi_arprot   ), // output wire [2 : 0] m_axi_arprot
+                .m_axi_arregion ( dwidth_conv_from_d32_instr_axi_arregion ), // output wire [3 : 0] m_axi_arregion
+                .m_axi_arqos    ( dwidth_conv_from_d32_instr_axi_arqos    ), // output wire [3 : 0] m_axi_arqos
+                .m_axi_arvalid  ( dwidth_conv_from_d32_instr_axi_arvalid  ), // output wire m_axi_arvalid
+                .m_axi_arready  ( dwidth_conv_from_d32_instr_axi_arready  ), // input wire m_axi_arready
+                .m_axi_rdata    ( dwidth_conv_from_d32_instr_axi_rdata    ), // input wire [31 : 0] m_axi_rdata
+                .m_axi_rresp    ( dwidth_conv_from_d32_instr_axi_rresp    ), // input wire [1 : 0] m_axi_rresp
+                .m_axi_rlast    ( dwidth_conv_from_d32_instr_axi_rlast    ), // input wire m_axi_rlast
+                .m_axi_rvalid   ( dwidth_conv_from_d32_instr_axi_rvalid   ), // input wire m_axi_rvalid
+                .m_axi_rready   ( dwidth_conv_from_d32_instr_axi_rready   )  // output wire m_axi_rready
             );
 
 
@@ -836,18 +836,18 @@ module rv_socket # (
             );
 
             // Attach to socket
-            `ASSIGN_AXI_BUS(rv_socket_data , adapter_to_64_data);
-            `ASSIGN_AXI_BUS(rv_socket_instr , adapter_to_64_instr);
+            `ASSIGN_AXI_BUS(rv_socket_data , dwidth_conv_to_d64_data);
+            `ASSIGN_AXI_BUS(rv_socket_instr , dwidth_conv_to_d64_instr);
 
             // Tie-off undriven ID signals
             // ID's are set to zero since they are not present in microblaze, while the crossbar have ID's of size 2.
             // Instruction
-            assign adapter_to_64_instr_axi_awid = '0;
-            assign adapter_to_64_instr_axi_arid = '0;
+            assign dwidth_conv_to_d64_instr_axi_awid = '0;
+            assign dwidth_conv_to_d64_instr_axi_arid = '0;
 
             // Data
-            assign adapter_to_64_data_axi_awid = '0;
-            assign adapter_to_64_data_axi_arid = '0;
+            assign dwidth_conv_to_d64_data_axi_awid = '0;
+            assign dwidth_conv_to_d64_data_axi_arid = '0;
         end : xlnx_microblazev_rv64
 
         else if (CORE_SELECTOR == CORE_CV64A6) begin: core_cv64a6
