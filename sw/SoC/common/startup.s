@@ -152,7 +152,7 @@ _start:
 _exit_wfi:
   wfi
 
-  # Spin in place
+# Spin in place
 _exit_spin:
   j _exit_spin
 
